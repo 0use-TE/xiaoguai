@@ -4,11 +4,11 @@
 
 // Theme configurations
 const themes = {
-    pink: { name: '粉色', icon: '🌸' },
-    mint: { name: '薄荷', icon: '🌿' },
-    lavender: { name: '薰衣草', icon: '🪻' },
-    cream: { name: '奶油', icon: '🌻' },
-    mocha: { name: '摩卡', icon: '🧸' }
+    pink: { name: '粉色', icon: '🌸', color: '#F8C8DC' },
+    mint: { name: '薄荷', icon: '🌿', color: '#98D8C8' },
+    lavender: { name: '薰衣草', icon: '🪻', color: '#C9B1FF' },
+    cream: { name: '奶油', icon: '🌻', color: '#F5D6A8' },
+    mocha: { name: '摩卡', icon: '🧸', color: '#D4A574' }
 };
 
 // Pet reactions
@@ -26,9 +26,9 @@ const petReactions = [
 // Click effects
 const clickEmojis = ['💗', '💖', '💕', '💓', '⭐', '✨', '🦋', '🎀', '🌸'];
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // ===== Loading Animation =====
-    setTimeout(function() {
+    setTimeout(function () {
         document.querySelector('.loading').classList.add('hidden');
     }, 500);
 
@@ -64,19 +64,119 @@ function initThemeSystem() {
     const savedTheme = localStorage.getItem('xiaoguai-theme') || 'pink';
     document.body.setAttribute('data-theme', savedTheme);
 
-    // Create theme switcher UI
-    createThemeSwitcher(savedTheme);
+    // 根据屏幕大小创建不同的主题切换器
+    if (window.innerWidth <= 768) {
+        // 手机端：创建抽屉式主题切换器
+        createMobileThemeDrawer(savedTheme);
+    } else {
+        // 电脑端：创建桌面主题切换器
+        createDesktopThemeSwitcher(savedTheme);
+    }
 
-    // Update current theme indicator
-    updateThemeIndicator(savedTheme);
+    // 监听窗口大小变化
+    window.addEventListener('resize', handleResize);
 }
 
-function createThemeSwitcher(currentTheme) {
-    // Remove existing switcher if any
-    const existingSwitcher = document.querySelector('.theme-switcher');
-    if (existingSwitcher) existingSwitcher.remove();
+function handleResize() {
+    const isMobile = window.innerWidth <= 768;
+    const hasMobileDrawer = document.querySelector('.theme-toggle-btn');
+    const hasDesktopSwitcher = document.querySelector('.theme-switcher');
 
-    // Create new switcher
+    // 更新pet-button类名和内容
+    const petBtn = document.querySelector('.pet-button');
+    if (petBtn) {
+        if (isMobile) {
+            petBtn.className = 'pet-button';
+            petBtn.innerHTML = '🐾 撸小乖';
+        } else {
+            petBtn.className = 'pet-button desktop';
+            petBtn.innerHTML = '撸小乖';
+        }
+    }
+
+    if (isMobile && hasDesktopSwitcher) {
+        // 从桌面切换到手机
+        document.querySelector('.theme-switcher').remove();
+        createMobileThemeDrawer(document.body.getAttribute('data-theme'));
+    } else if (!isMobile && hasMobileDrawer) {
+        // 从手机切换到桌面
+        document.querySelector('.theme-toggle-btn')?.remove();
+        document.querySelector('.theme-drawer')?.remove();
+        document.querySelector('.theme-overlay')?.remove();
+        createDesktopThemeSwitcher(document.body.getAttribute('data-theme'));
+    }
+}
+
+/**
+ * 创建手机端抽屉式主题切换器
+ */
+function createMobileThemeDrawer(currentTheme) {
+    // Remove existing mobile elements
+    const existingToggle = document.querySelector('.theme-toggle-btn');
+    const existingDrawer = document.querySelector('.theme-drawer');
+    const existingOverlay = document.querySelector('.theme-overlay');
+    if (existingToggle) existingToggle.remove();
+    if (existingDrawer) existingDrawer.remove();
+    if (existingOverlay) existingOverlay.remove();
+
+    // Create toggle button
+    const toggleBtn = document.createElement('button');
+    toggleBtn.className = 'theme-toggle-btn';
+    toggleBtn.innerHTML = '🎨';
+    toggleBtn.title = '切换主题';
+    document.body.appendChild(toggleBtn);
+
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'theme-overlay';
+    document.body.appendChild(overlay);
+
+    // Create drawer
+    const drawer = document.createElement('div');
+    drawer.className = 'theme-drawer';
+    drawer.innerHTML = `
+        <button class="close-btn">✕</button>
+        <h3>🎀 选择主题</h3>
+        <div class="theme-options"></div>
+    `;
+    document.body.appendChild(drawer);
+
+    // Create theme options
+    const optionsContainer = drawer.querySelector('.theme-options');
+    Object.keys(themes).forEach(themeKey => {
+        const option = document.createElement('button');
+        option.className = `theme-btn ${themeKey === currentTheme ? 'active' : ''}`;
+        option.innerHTML = `
+            <span class="color-dot" style="background: ${themes[themeKey].color}"></span>
+            <span>${themes[themeKey].icon} ${themes[themeKey].name}</span>
+        `;
+        option.addEventListener('click', () => switchTheme(themeKey));
+        optionsContainer.appendChild(option);
+    });
+
+    // Toggle drawer
+    toggleBtn.addEventListener('click', () => {
+        drawer.classList.add('open');
+        overlay.classList.add('show');
+        toggleBtn.classList.add('active');
+    });
+
+    // Close functions
+    const closeDrawer = () => {
+        drawer.classList.remove('open');
+        overlay.classList.remove('show');
+        toggleBtn.classList.remove('active');
+    };
+
+    overlay.addEventListener('click', closeDrawer);
+    drawer.querySelector('.close-btn').addEventListener('click', closeDrawer);
+}
+
+/**
+ * 创建电脑端主题切换器
+ */
+function createDesktopThemeSwitcher(currentTheme) {
+    // Create switcher (desktop only)
     const switcher = document.createElement('div');
     switcher.className = 'theme-switcher';
 
@@ -101,44 +201,33 @@ function switchTheme(themeName) {
     // Apply theme
     document.body.setAttribute('data-theme', themeName);
 
-    // Update active state
-    document.querySelectorAll('.theme-btn').forEach(btn => {
+    // Update desktop active state
+    document.querySelectorAll('.theme-switcher .theme-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.getAttribute('data-theme') === themeName) {
             btn.classList.add('active');
         }
     });
 
-    // Update indicator
-    updateThemeIndicator(themeName);
+    // Update mobile drawer active state
+    document.querySelectorAll('.theme-drawer .theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.querySelector('.color-dot').style.background.includes(themes[themeName].color) ||
+            btn.innerHTML.includes(themes[themeName].name)) {
+            btn.classList.add('active');
+        }
+    });
+
+    // Close drawer on mobile
+    const drawer = document.querySelector('.theme-drawer');
+    const overlay = document.querySelector('.theme-overlay');
+    const toggleBtn = document.querySelector('.theme-toggle-btn');
+    if (drawer) drawer.classList.remove('open');
+    if (overlay) overlay.classList.remove('show');
+    if (toggleBtn) toggleBtn.classList.remove('active');
 
     // Create celebration effect
     createThemeSwitchEffect();
-}
-
-function updateThemeIndicator(themeName) {
-    // Remove existing indicator
-    const existingIndicator = document.querySelector('.current-theme');
-    if (existingIndicator) existingIndicator.remove();
-
-    const indicator = document.createElement('div');
-    indicator.className = 'current-theme';
-    indicator.innerHTML = `${themes[themeName].icon} ${themes[themeName].name}`;
-    document.body.appendChild(indicator);
-
-    // Animate indicator
-    setTimeout(() => {
-        indicator.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-            indicator.style.transform = 'scale(1)';
-        }, 150);
-    }, 50);
-
-    // Remove after 2 seconds
-    setTimeout(() => {
-        indicator.style.opacity = '0';
-        setTimeout(() => indicator.remove(), 300);
-    }, 2000);
 }
 
 function createThemeSwitchEffect() {
@@ -306,10 +395,10 @@ function initLightbox() {
     });
 
     // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
         if (!lightbox.classList.contains('active')) return;
 
-        switch(e.key) {
+        switch (e.key) {
             case 'Escape':
                 closeLightbox();
                 break;
@@ -332,11 +421,11 @@ function initGalleryEffects() {
     const items = document.querySelectorAll('.gallery-item');
 
     items.forEach(item => {
-        item.addEventListener('mouseenter', function() {
+        item.addEventListener('mouseenter', function () {
             this.style.zIndex = '10';
         });
 
-        item.addEventListener('mouseleave', function() {
+        item.addEventListener('mouseleave', function () {
             this.style.zIndex = '1';
         });
     });
@@ -353,9 +442,18 @@ function initPetButton() {
 }
 
 function createPetButton() {
+    // 检查是否已存在，避免重复创建
+    if (document.querySelector('.pet-button')) return;
+
     const btn = document.createElement('button');
-    btn.className = 'pet-button';
-    btn.innerHTML = '<span class="emoji">🐾</span> 撸小乖';
+    // 根据屏幕大小添加不同的类
+    if (window.innerWidth <= 768) {
+        btn.className = 'pet-button';
+        btn.innerHTML = '🐾 撸小乖';
+    } else {
+        btn.className = 'pet-button desktop';
+        btn.innerHTML = '撸小乖';
+    }
     document.body.appendChild(btn);
 
     // Create reaction popup
@@ -413,7 +511,8 @@ function initClickEffects() {
     // Add click listener to body
     document.body.addEventListener('click', (e) => {
         // Ignore clicks on interactive elements
-        if (e.target.closest('.theme-btn') ||
+        if (e.target.closest('.theme-toggle-btn') ||
+            e.target.closest('.theme-drawer') ||
             e.target.closest('.pet-button') ||
             e.target.closest('.gallery-item') ||
             e.target.closest('.lightbox') ||
@@ -474,7 +573,7 @@ function initCookieConsent() {
     `;
     document.body.appendChild(consent);
 
-    window.acceptCookies = function() {
+    window.acceptCookies = function () {
         localStorage.setItem(consentKey, 'accepted');
         consent.classList.add('hidden');
         setTimeout(() => consent.remove(), 500);

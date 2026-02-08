@@ -3,19 +3,19 @@
 
 /* ===== Theme Variables ===== */
 :root {
-    /* Pink Theme (Default) */
-    --primary-color: #FFB6C1;
-    --secondary-color: #FFC0CB;
-    --accent-color: #FF69B4;
-    --bg-color: #FFF0F5;
-    --bg-gradient-1: rgba(255, 182, 193, 0.3);
-    --bg-gradient-2: rgba(255, 220, 230, 0.5);
-    --text-color: #8B6B7A;
-    --heading-color: #FF69B4;
-    --card-bg: linear-gradient(135deg, #FFFFFF 0%, #FFF5F8 50%, #FFFFFF 100%);
-    --overlay-color: rgba(255, 105, 180, 0.85);
-    --shadow-color: rgba(255, 182, 193, 0.25);
-    --glow-color: rgba(255, 182, 193, 0.5);
+    /* Pink Theme (Default) - 优雅樱花粉 */
+    --primary-color: #F8C8DC;
+    --secondary-color: #FFDFEF;
+    --accent-color: #E8A0B5;
+    --bg-color: #FDF5F8;
+    --bg-gradient-1: rgba(248, 200, 220, 0.4);
+    --bg-gradient-2: rgba(255, 223, 239, 0.6);
+    --text-color: #9B7B8A;
+    --heading-color: #D495A5;
+    --card-bg: linear-gradient(135deg, #FFFFFF 0%, #FDF5F8 50%, #FFFFFF 100%);
+    --overlay-color: rgba(228, 144, 169, 0.85);
+    --shadow-color: rgba(248, 200, 220, 0.3);
+    --glow-color: rgba(248, 200, 220, 0.5);
     --theme-icon: 🌸;
 }
 
@@ -96,6 +96,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -270,18 +271,34 @@ body {
     animation: spin 2s linear infinite, pulse 1s ease-in-out infinite;
 }
 
-/* ===== Theme Switcher ===== */
+/* ===== Theme Switcher (Desktop) ===== */
 .theme-switcher {
     position: fixed;
     top: 20px;
     right: 20px;
     z-index: 1000;
     display: flex;
-    gap: 10px;
-    background: white;
-    padding: 12px 16px;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 14px;
     border-radius: 50px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Mobile theme toggle button - hidden on desktop */
+.theme-toggle-btn {
+    display: none;
+}
+
+/* Mobile theme drawer - hidden on desktop */
+.theme-drawer {
+    display: none;
+}
+
+/* Mobile overlay - hidden on desktop */
+.theme-overlay {
+    display: none;
 }
 
 .theme-btn {
@@ -485,7 +502,7 @@ header {
     padding: 120px 20px;
     box-shadow: 0 8px 30px var(--shadow-color);
     position: relative;
-    overflow: visible;
+    overflow: hidden;
     transition: background 0.5s ease, box-shadow 0.5s ease;
 }
 
@@ -1137,40 +1154,197 @@ footer .heart {
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
+    /* 隐藏电脑端的元素 */
     .theme-switcher {
+        display: none !important;
+    }
+
+    /* 电脑端pet-button隐藏，移动端pet-button显示 */
+    .pet-button.desktop {
+        display: none !important;
+    }
+
+    /* 移动端：主题切换按钮 - 右下角悬浮 */
+    .theme-toggle-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        border: none;
+        cursor: pointer;
+        z-index: 10000;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .theme-toggle-btn.active {
+        transform: rotate(90deg);
+    }
+
+    /* 主题抽屉 - 从右向左滑出 */
+    .theme-drawer {
+        display: block;
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 280px;
+        height: 100%;
+        background: linear-gradient(180deg, var(--bg-color) 0%, #fff 100%);
+        z-index: 9998;
+        padding: 80px 20px 20px;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow-y: auto;
+    }
+
+    .theme-drawer.open {
+        right: 0;
+    }
+
+    .theme-drawer h3 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: var(--heading-color);
+        font-family: 'Fredoka One', cursive;
+    }
+
+    .theme-drawer .theme-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .theme-drawer .theme-btn {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 16px 20px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .theme-drawer .theme-btn:hover {
+        transform: translateX(-5px);
+        box-shadow: 0 5px 15px var(--shadow-color);
+    }
+
+    .theme-drawer .theme-btn.active {
+        border-color: var(--accent-color);
+        background: var(--bg-color);
+    }
+
+    .theme-drawer .theme-btn .color-dot {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .theme-drawer .theme-btn span {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #444;
+        font-family: 'Quicksand', sans-serif;
+    }
+
+    .theme-drawer .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: none;
+        background: var(--bg-color);
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 遮罩层 */
+    .theme-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9997;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .theme-overlay.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* 移动端：撸小乖按钮 - 右下角 */
+    .pet-button {
+        position: fixed;
+        bottom: 85px;
+        right: 20px;
         top: auto;
-        bottom: 90px;
-        right: 10px;
-        padding: 8px 12px;
-        flex-wrap: wrap;
-        max-width: 80px;
+        left: auto;
+        transform: none;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+        z-index: 9999;
+        white-space: nowrap;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .theme-btn {
-        width: 30px;
-        height: 30px;
-    }
-
-    .current-theme {
+    .pet-button .emoji {
         display: none;
     }
 
-    .pet-button {
-        bottom: 20px;
-        left: 20px;
-        padding: 12px 20px;
-        font-size: 0.9rem;
+    .pet-button::before {
+        content: '🐾';
+        margin-right: 6px;
     }
 
     .pet-reaction {
-        bottom: 85px;
-        left: 20px;
-        font-size: 1rem;
-        padding: 10px 15px;
+        position: fixed;
+        bottom: 145px;
+        right: 20px;
+        left: auto;
+        top: auto;
+        transform: none;
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        white-space: nowrap;
+        max-width: 200px;
+        text-align: center;
+        z-index: 10000;
     }
 
     header {
         padding: 80px 20px;
+        z-index: 1;
+        overflow: hidden;
     }
 
     header h1 {
