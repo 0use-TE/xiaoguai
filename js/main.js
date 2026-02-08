@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ===== Click Effects =====
     initClickEffects();
+
+    // ===== BGM Toggle =====
+    initBGM();
+
+    // ===== Feed Xiaoguai =====
+    initFeedFeature();
 });
 
 /**
@@ -260,3 +266,109 @@ function addSparklesToElement(selector) {
 
 // Initialize sparkle effects
 addSparklesToElement('.gallery-item');
+
+/**
+ * BGM 背景音乐开关
+ */
+function initBGM() {
+    const bgmToggle = document.getElementById('bgmToggle');
+    const bgmAudio = document.getElementById('bgmAudio');
+
+    if (!bgmToggle || !bgmAudio) return;
+
+    // 从 localStorage 恢复播放状态
+    const wasPlaying = localStorage.getItem('bgmPlaying') === 'true';
+    if (wasPlaying) {
+        bgmAudio.play().catch(() => {}); // 尝试播放（可能因浏览器策略失败）
+        bgmToggle.classList.add('playing');
+    }
+
+    // 播放/暂停切换
+    bgmToggle.addEventListener('click', function () {
+        if (bgmAudio.paused) {
+            bgmAudio.play().catch(() => {});
+            localStorage.setItem('bgmPlaying', 'true');
+            this.classList.add('playing');
+        } else {
+            bgmAudio.pause();
+            localStorage.setItem('bgmPlaying', 'false');
+            this.classList.remove('playing');
+        }
+    });
+}
+
+/**
+ * 喂小乖互动功能
+ */
+function initFeedFeature() {
+    const feedButtons = document.querySelectorAll('.feed-btn');
+    const feedCounter = document.getElementById('feedCounter');
+    const feedReaction = document.getElementById('feedReaction');
+
+    if (!feedCounter) return;
+
+    // 从 localStorage 恢复喂食次数
+    let feedCount = parseInt(localStorage.getItem('feedCount') || '0');
+    updateFeedCounter();
+
+    feedButtons.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+
+            // 增加喂食次数
+            feedCount++;
+            localStorage.setItem('feedCount', feedCount.toString());
+            updateFeedCounter();
+
+            // 显示反应动画
+            showFeedReaction();
+
+            // 在点击位置创建猫粮飘动效果
+            createFoodFloating(this);
+        });
+    });
+
+    function updateFeedCounter() {
+        const countEl = feedCounter.querySelector('.feed-count');
+        if (countEl) {
+            countEl.textContent = feedCount;
+        }
+    }
+
+    function showFeedReaction() {
+        if (!feedReaction) return;
+
+        const reactions = ['💕', '💗', '💖', '🥰', '😸', '🦔✨'];
+        const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+
+        feedReaction.textContent = randomReaction;
+        feedReaction.classList.add('show');
+
+        setTimeout(() => {
+            feedReaction.classList.remove('show');
+        }, 1500);
+    }
+
+    function createFoodFloating(btn) {
+        const rect = btn.getBoundingClientRect();
+
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const food = document.createElement('div');
+                food.textContent = '🍖';
+                food.style.cssText = `
+                    position: fixed;
+                    left: ${rect.left + Math.random() * rect.width}px;
+                    top: ${rect.top}px;
+                    font-size: 1.5rem;
+                    animation: feedFloat 1s ease-out forwards;
+                    pointer-events: none;
+                    z-index: 1000;
+                `;
+                document.body.appendChild(food);
+
+                setTimeout(() => food.remove(), 1000);
+            }, i * 100);
+        }
+    }
+}

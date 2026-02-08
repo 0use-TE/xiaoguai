@@ -117,6 +117,59 @@ body {
     100% { opacity: 0; transform: translateY(-100px) scale(0.5); }
 }
 
+@keyframes feedFloat {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px) rotate(-5deg); }
+    75% { transform: translateX(10px) rotate(5deg); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+}
+
+@keyframes bgmPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* ===== BGM Toggle ===== */
+.bgm-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #fff 0%, #fdf2f5 100%);
+    box-shadow: 0 4px 15px rgba(248, 200, 220, 0.4);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bgm-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(248, 200, 220, 0.6);
+}
+
+.bgm-toggle.playing .bgm-icon {
+    animation: bgmPulse 1s ease-in-out infinite;
+}
+
+.bgm-toggle.playing {
+    background: linear-gradient(135deg, #F8C8DC 0%, #E8A0B5 100%);
+}
+
 /* ===== Scroll Animations ===== */
 .fade-in {
     opacity: 0;
@@ -188,6 +241,13 @@ body {
     pointer-events: none;
     z-index: 999;
     overflow: hidden;
+}
+
+.click-effect .effect {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: floatUp 1s ease-out forwards;
+    pointer-events: none;
 }
 
 .click-effect .heart,
@@ -328,6 +388,82 @@ header p {
     animation: fadeInUp 0.8s ease 0.4s forwards;
     font-weight: 500;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Today's Xiaoguai Section ===== */
+.today-section {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.today-frame {
+    background: linear-gradient(135deg, #fff 0%, #fdf2f5 50%, #fff 100%);
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow:
+        0 15px 50px rgba(248, 200, 220, 0.3),
+        0 0 0 8px rgba(255, 255, 255, 0.9),
+        inset 0 0 60px rgba(255, 182, 193, 0.05);
+    position: relative;
+    text-align: center;
+}
+
+.frame-decoration {
+    position: absolute;
+    font-size: 2rem;
+}
+
+.frame-decoration.top-left {
+    top: 15px;
+    left: 20px;
+    animation: wiggle 3s ease-in-out infinite;
+}
+
+.frame-decoration.top-right {
+    top: 15px;
+    right: 20px;
+    animation: wiggle 3s ease-in-out infinite 1.5s;
+}
+
+.frame-decoration.bottom-left {
+    bottom: 15px;
+    left: 20px;
+    animation: wiggle 3s ease-in-out infinite 0.5s;
+}
+
+.frame-decoration.bottom-right {
+    bottom: 15px;
+    right: 20px;
+    animation: wiggle 3s ease-in-out infinite 2s;
+}
+
+.today-content h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #D495A5;
+    margin-bottom: 15px;
+}
+
+.today-date {
+    font-size: 1rem;
+    color: #9B7B8A;
+    margin-bottom: 20px;
+}
+
+.today-content img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(248, 200, 220, 0.4);
+    animation: bounceIn 0.8s ease;
+}
+
+.today-caption {
+    margin-top: 15px;
+    font-size: 1.1rem;
+    color: #9B7B8A;
+    font-weight: 500;
 }
 
 /* ===== Main Content ===== */
@@ -730,6 +866,83 @@ main {
     right: 25%;
 }
 
+/* ===== Feed Button ===== */
+.feed-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 100%);
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+    z-index: 10;
+}
+
+.gallery-item:hover .feed-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feed-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+}
+
+.feed-btn:active {
+    transform: scale(0.95);
+}
+
+/* ===== Feed Counter ===== */
+.feed-counter {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(135deg, #fff 0%, #fdf2f5 100%);
+    padding: 15px 25px;
+    border-radius: 30px;
+    box-shadow: 0 8px 25px rgba(248, 200, 220, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: #D495A5;
+}
+
+.feed-icon {
+    font-size: 1.8rem;
+}
+
+/* ===== Feed Reaction Popup ===== */
+.feed-reaction {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    pointer-events: none;
+    opacity: 0;
+    z-index: 1001;
+}
+
+.feed-reaction.show {
+    animation: bounce 0.6s ease, fadeOut 1s ease 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translate(-50%, -80px); }
+}
+
 /* ===== Footer ===== */
 footer {
     text-align: center;
@@ -982,5 +1195,43 @@ footer .heart {
 
     .stat-number {
         font-size: 2.8rem;
+    }
+
+    /* BGM Toggle mobile */
+    .bgm-toggle {
+        width: 45px;
+        height: 45px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .bgm-toggle .bgm-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Today's Xiaoguai mobile */
+    .today-frame {
+        padding: 25px 20px;
+        border-radius: 25px;
+    }
+
+    .today-content h3 {
+        font-size: 1.6rem;
+    }
+
+    .frame-decoration {
+        font-size: 1.5rem;
+    }
+
+    /* Feed Counter mobile */
+    .feed-counter {
+        bottom: 20px;
+        left: 20px;
+        padding: 12px 20px;
+        font-size: 1.2rem;
+    }
+
+    .feed-icon {
+        font-size: 1.5rem;
     }
 }

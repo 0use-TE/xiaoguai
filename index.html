@@ -25,6 +25,11 @@
         <div class="loading-spinner">🎀</div>
     </div>
 
+    <!-- BGM Toggle Button -->
+    <button class="bgm-toggle" id="bgmToggle" title="背景音乐">
+        <span class="bgm-icon">🎵</span>
+    </button>
+
     <header>
         <div class="blob"></div>
         <div class="blob"></div>
@@ -40,6 +45,12 @@
         <h1>小乖</h1>
         <p>一只可爱的非洲迷你小刺猬</p>
     </header>
+
+    <!-- BGM Audio -->
+    <audio id="bgmAudio" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
 
     <main>
         <section class="about-section fade-in">
@@ -68,7 +79,7 @@
         <section class="gallery-section fade-in">
             <h2>小乖的日常</h2>
             <div class="gallery">
-                <div class="gallery-item" data-index="0">
+                <div class="gallery-item" data-index="0" data-name="麻将桌上的小乖">
                     <img src="images/麻将桌上的小乖.png" alt="麻将桌上的小乖">
                     <div class="gallery-icon">🐾</div>
                     <span class="sparkle"></span>
@@ -79,8 +90,9 @@
                         <h3>麻将桌上的小乖</h3>
                         <p>在麻将桌上玩耍的小乖</p>
                     </div>
+                    <button class="feed-btn" title="喂小乖">🍖 喂小乖</button>
                 </div>
-                <div class="gallery-item" data-index="1">
+                <div class="gallery-item" data-index="1" data-name="拖着小乖">
                     <img src="images/拖着小乖.png" alt="拖着小乖" loading="lazy">
                     <div class="gallery-icon">🐾</div>
                     <span class="sparkle"></span>
@@ -91,8 +103,9 @@
                         <h3>托着小乖</h3>
                         <p>托着毛茸茸的小乖</p>
                     </div>
+                    <button class="feed-btn" title="喂小乖">🍖 喂小乖</button>
                 </div>
-                <div class="gallery-item" data-index="2">
+                <div class="gallery-item" data-index="2" data-name="怀里面可爱的小乖">
                     <img src="images/怀里面可爱的小乖.png" alt="怀里面可爱的小乖" loading="lazy">
                     <div class="gallery-icon">🐾</div>
                     <span class="sparkle"></span>
@@ -103,8 +116,9 @@
                         <h3>怀里面可爱的小乖</h3>
                         <p>乖乖躺在怀里的小乖</p>
                     </div>
+                    <button class="feed-btn" title="喂小乖">🍖 喂小乖</button>
                 </div>
-                <div class="gallery-item" data-index="3">
+                <div class="gallery-item" data-index="3" data-name="肥肥的小乖看着我">
                     <img src="images/肥肥的小乖看着我.png" alt="肥肥的小乖看着我" loading="lazy">
                     <div class="gallery-icon">🐾</div>
                     <span class="sparkle"></span>
@@ -115,8 +129,9 @@
                         <h3>肥肥的小乖看着我</h3>
                         <p>肥嘟嘟的小乖深情地看着你</p>
                     </div>
+                    <button class="feed-btn" title="喂小乖">🍖 喂小乖</button>
                 </div>
-                <div class="gallery-item" data-index="4">
+                <div class="gallery-item" data-index="4" data-name="手拽着小乖">
                     <img src="images/手拽着小乖.png" alt="手拽着小乖" loading="lazy">
                     <div class="gallery-icon">🐾</div>
                     <span class="sparkle"></span>
@@ -127,8 +142,9 @@
                         <h3>手拽着小乖</h3>
                         <p>小小的手拽着小小的她</p>
                     </div>
+                    <button class="feed-btn" title="喂小乖">🍖 喂小乖</button>
                 </div>
-                <div class="gallery-item" data-index="5">
+                <div class="gallery-item" data-index="5" data-name="在喝水的小乖">
                     <img src="images/在喝水的小乖.png" alt="在喝水的小乖" loading="lazy">
                     <div class="gallery-icon">🐾</div>
                     <span class="sparkle"></span>
@@ -139,10 +155,20 @@
                         <h3>在喝水的小乖</h3>
                         <p>认真喝水的小乖</p>
                     </div>
+                    <button class="feed-btn" title="喂小乖">🍖 喂小乖</button>
                 </div>
             </div>
         </section>
     </main>
+
+    <!-- Feed Counter -->
+    <div class="feed-counter" id="feedCounter">
+        <span class="feed-icon">🍖</span>
+        <span class="feed-count">0</span>
+    </div>
+
+    <!-- Feed Reaction Popup -->
+    <div class="feed-reaction" id="feedReaction"></div>
 
     <footer>
         <p>Made with <span class="heart">❤</span> for 小乖</p>
