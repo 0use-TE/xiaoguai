@@ -50,6 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // ===== Timeline Scroll Animation =====
     initTimelineAnimation();
+
+    // ===== Together Days Counter =====
+    initTogetherDays();
+
+    // ===== Wish List =====
+    initWishList();
+
+    // ===== Daily Timeline Animation =====
+    initDailyTimeline();
 });
 
 /**
@@ -420,4 +429,120 @@ function initFeedFeature() {
             }, i * 100);
         }
     }
+}
+
+/**
+ * 初始化陪伴天数计算
+ */
+function initTogetherDays() {
+    // 从2025年10月10日开始
+    const startDate = new Date('2025-10-10T00:00:00');
+
+    function updateDays() {
+        const now = new Date();
+        const diffTime = now - startDate;
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        const daysElement = document.getElementById('togetherDays');
+        if (daysElement) {
+            animateNumber(daysElement, diffDays);
+        }
+
+        // 更新喂食次数
+        const feedCount = localStorage.getItem('feedCount') || '0';
+        const feedElement = document.getElementById('feedCount');
+        if (feedElement) {
+            feedElement.textContent = feedCount;
+        }
+    }
+
+    // 初始更新
+    updateDays();
+
+    // 每天更新一次
+    setInterval(updateDays, 86400000);
+}
+
+/**
+ * 数字计数动画
+ */
+function animateNumber(element, target) {
+    const duration = 1500;
+    const steps = 60;
+    const increment = Math.ceil(target / steps);
+    const stepTime = duration / steps;
+
+    let current = 0;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        element.textContent = current;
+    }, stepTime);
+}
+
+/**
+ * 初始化愿望清单点击功能
+ */
+function initWishList() {
+    const wishCards = document.querySelectorAll('.wish-card');
+
+    wishCards.forEach(card => {
+        card.addEventListener('click', function () {
+            this.classList.toggle('completed');
+
+            // 切换勾选状态
+            const check = this.querySelector('.wish-check');
+            if (this.classList.contains('completed')) {
+                check.textContent = '✓';
+            } else {
+                check.textContent = '';
+            }
+
+            // 保存状态到 localStorage
+            const wishId = this.dataset.wish;
+            const isCompleted = this.classList.contains('completed');
+            localStorage.setItem(`wish_${wishId}`, isCompleted);
+        });
+
+        // 恢复保存的状态
+        const wishId = card.dataset.wish;
+        const wasCompleted = localStorage.getItem(`wish_${wishId}`) === 'true';
+        if (wasCompleted) {
+            card.classList.add('completed');
+            const check = card.querySelector('.wish-check');
+            if (check) check.textContent = '✓';
+        }
+    });
+}
+
+/**
+ * 初始化每日时间线动画
+ */
+function initDailyTimeline() {
+    const dailyItems = document.querySelectorAll('.daily-item');
+
+    if (dailyItems.length === 0) return;
+
+    const dailyObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    dailyItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'all 0.5s ease';
+        dailyObserver.observe(item);
+    });
 }
