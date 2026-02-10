@@ -1,0 +1,282 @@
+/* ===== Milestone Timeline Section ===== */
+.milestone-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px;
+    position: relative;
+    text-align: center;
+}
+
+.milestone-section .pearl {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #FFB6C1, #FF69B4);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+.milestone-section .pearl:nth-child(1) { top: 20px; left: 10%; }
+.milestone-section .pearl:nth-child(2) { top: 40px; left: 85%; }
+.milestone-section .pearl:nth-child(3) { bottom: 40px; left: 15%; }
+.milestone-section .pearl:nth-child(4) { bottom: 20px; left: 80%; }
+
+/* Timeline Container */
+.timeline {
+    position: relative;
+    margin: 50px auto;
+    padding: 20px 0;
+}
+
+/* Vertical Line */
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg,
+        #FFB6C1 0%,
+        #FF69B4 50%,
+        #DDA0DD 100%);
+    transform: translateX(-50%);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+    z-index: 0;
+}
+
+/* Timeline Item */
+.timeline-item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 15px 0;
+    width: 45%;
+    position: relative;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: all 0.6s ease;
+}
+
+.timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.timeline-item:nth-child(odd) {
+    justify-content: flex-end;
+    margin-left: auto;
+    padding-right: 60px;
+}
+
+.timeline-item:nth-child(even) {
+    justify-content: flex-start;
+    margin-right: auto;
+    padding-left: 60px;
+    transform: translateX(30px);
+}
+
+.timeline-item:nth-child(even).visible {
+    transform: translateX(0);
+}
+
+/* Timeline Marker (Icon) */
+.timeline-marker {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #fff 0%, #FFE4EC 100%);
+    border: 4px solid #FFB6C1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow:
+        0 0 20px rgba(255, 182, 193, 0.5),
+        inset 0 0 15px rgba(255, 255, 255, 0.8);
+    z-index: 0;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+    transform: translateX(-50%) scale(1.15);
+    box-shadow:
+        0 0 30px rgba(255, 105, 180, 0.6),
+        inset 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+/* Timeline Content */
+.timeline-content {
+    background: linear-gradient(135deg, #fff 0%, #FDF2F5 100%);
+    padding: 20px 25px;
+    border-radius: 20px;
+    max-width: 320px;
+    box-shadow:
+        0 8px 25px rgba(248, 200, 220, 0.4),
+        0 0 0 3px rgba(255, 182, 193, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.timeline-item:hover .timeline-content {
+    transform: translateY(-5px);
+    box-shadow:
+        0 12px 35px rgba(248, 200, 220, 0.5),
+        0 0 0 3px rgba(255, 182, 193, 0.3);
+}
+
+/* Little triangle on content bubble */
+.timeline-item:nth-child(odd) .timeline-content::after {
+    content: '';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 10px solid transparent;
+    border-left-color: #fff;
+}
+
+.timeline-item:nth-child(even) .timeline-content::after {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 10px solid transparent;
+    border-right-color: #fff;
+}
+
+.timeline-content h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    color: #D495A5;
+    margin-bottom: 5px;
+}
+
+.timeline-date {
+    font-size: 0.8rem;
+    color: #FF69B4;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.timeline-desc {
+    font-size: 0.9rem;
+    color: #9B7B8A;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.timeline-emoji {
+    font-size: 1.5rem;
+    display: block;
+    animation: emojiBounce 2s ease-in-out infinite;
+}
+
+@keyframes emojiBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+/* Milestone Quote */
+.milestone-quote {
+    margin-top: 50px;
+    padding: 30px;
+    background: linear-gradient(135deg, #FFF5F7 0%, #FFE4EC 100%);
+    border-radius: 25px;
+    border: 3px dashed #FFB6C1;
+    box-shadow: 0 8px 30px rgba(255, 182, 193, 0.3);
+}
+
+.milestone-quote p {
+    font-size: 1.2rem;
+    color: #D495A5;
+    margin: 0;
+}
+
+.milestone-quote strong {
+    color: #FF69B4;
+    font-size: 1.3rem;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+    .milestone-section {
+        padding: 40px 15px;
+    }
+
+    .timeline::before {
+        left: 30px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        width: 100%;
+        padding-left: 80px;
+        padding-right: 15px;
+        justify-content: flex-start;
+        transform: translateX(20px);
+    }
+
+    .timeline-item.visible,
+    .timeline-item:nth-child(even).visible {
+        transform: translateX(0);
+    }
+
+    .timeline-marker {
+        left: 30px;
+        width: 50px;
+        height: 50px;
+        font-size: 1.4rem;
+    }
+
+    .timeline-content {
+        max-width: 100%;
+        padding: 15px 18px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::after,
+    .timeline-item:nth-child(even) .timeline-content::after {
+        display: none;
+    }
+
+    .timeline-content h3 {
+        font-size: 1rem;
+    }
+
+    .timeline-desc {
+        font-size: 0.85rem;
+    }
+
+    .milestone-quote {
+        padding: 20px 15px;
+    }
+
+    .milestone-quote p {
+        font-size: 1rem;
+    }
+
+    .milestone-quote strong {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .timeline-marker {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 70px;
+    }
+}

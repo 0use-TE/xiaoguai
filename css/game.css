@@ -1,0 +1,332 @@
+/* ===== Mini Game - Catch Food ===== */
+.game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.game-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.game-container {
+    background: linear-gradient(180deg, #FDF2F5 0%, #FFE4EC 100%);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    min-width: 400px;
+    max-width: 90vw;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px dashed #F8C8DC;
+}
+
+.game-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    color: #D495A5;
+}
+
+.game-score {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #FF69B4;
+    background: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+
+.game-timer {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #5D9CEC;
+    background: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+}
+
+.game-area {
+    width: 350px;
+    height: 400px;
+    background: linear-gradient(180deg, #FFF5F7 0%, #FFE8EE 100%);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    border: 3px solid #F8C8DC;
+    margin: 0 auto;
+}
+
+.game-bowl {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem;
+    transition: left 0.1s ease;
+    z-index: 10;
+}
+
+.game-food {
+    position: absolute;
+    font-size: 2rem;
+    top: -50px;
+    z-index: 5;
+}
+
+.game-start-btn {
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    color: #fff;
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+}
+
+.game-start-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.5);
+}
+
+.game-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: none;
+    background: #F0F0F0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-close-btn:hover {
+    background: #FF6B6B;
+    color: #fff;
+}
+
+/* Game instructions */
+.game-instructions {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #9B7B8A;
+}
+
+.game-instructions kbd {
+    background: #F8C8DC;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+/* Game over screen */
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(253, 242, 245, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 17px;
+    z-index: 20;
+}
+
+.game-over h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #D495A5;
+    margin-bottom: 10px;
+}
+
+.game-over .final-score {
+    font-family: 'Fredoka One', cursive;
+    font-size: 3rem;
+    color: #FF69B4;
+    margin-bottom: 20px;
+}
+
+.game-over .score-message {
+    font-size: 1rem;
+    color: #9B7B8A;
+    margin-bottom: 20px;
+}
+
+/* Game entry button */
+.game-entry {
+    position: fixed;
+    bottom: 30px;
+    right: 140px;
+    z-index: 99;
+}
+
+.game-entry-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 100%);
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.game-entry-btn:hover {
+    transform: scale(1.1);
+}
+
+.game-entry-btn:hover::after {
+    content: '接猫粮！';
+    position: absolute;
+    bottom: -35px;
+    font-size: 0.8rem;
+    color: #FF69B4;
+    white-space: nowrap;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+    .game-overlay {
+        align-items: flex-end;
+        padding-bottom: 20px;
+    }
+
+    .game-container {
+        padding: 15px;
+        width: 95vw;
+        max-width: none;
+        border-radius: 25px 25px 0 0;
+    }
+
+    .game-header {
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .game-title {
+        font-size: 1.2rem;
+    }
+
+    .game-score,
+    .game-timer {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+    }
+
+    .game-area {
+        width: 100%;
+        height: 280px;
+        border-radius: 15px;
+    }
+
+    .game-bowl {
+        font-size: 2.5rem;
+    }
+
+    .game-food {
+        font-size: 1.3rem;
+    }
+
+    .game-instructions {
+        font-size: 0.8rem;
+        margin-top: 10px;
+    }
+
+    .game-instructions kbd {
+        padding: 2px 6px;
+        font-size: 0.75rem;
+    }
+
+    .game-start-btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+        margin-top: 15px;
+    }
+
+    .game-entry {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .game-entry-btn {
+        width: 55px;
+        height: 55px;
+        font-size: 1.6rem;
+    }
+
+    .game-over h3 {
+        font-size: 1.5rem;
+    }
+
+    .game-over .final-score {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 12px;
+    }
+
+    .game-header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .game-title {
+        width: 100%;
+        font-size: 1.1rem;
+    }
+
+    .game-score,
+    .game-timer {
+        font-size: 0.85rem;
+    }
+
+    .game-area {
+        height: 250px;
+    }
+
+    .game-bowl {
+        font-size: 2.2rem;
+    }
+
+    .game-food {
+        font-size: 1.2rem;
+    }
+}

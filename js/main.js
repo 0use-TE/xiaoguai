@@ -2,11 +2,27 @@
  * 小乖的网站 - 主脚本
  */
 
+// 导入模块
+import { initClock } from './clock.js';
+import { initDecoration } from './decoration.js';
+import { initFloating } from './floating.js';
+import { initMood, setMoodNotificationHTML } from './mood.js';
+import { initWeather } from './weather.js';
+// import { initGame } from './game.js'; // 游戏模块已移除
+
 document.addEventListener('DOMContentLoaded', function () {
     // ===== Loading Animation =====
     setTimeout(function () {
         document.querySelector('.loading').classList.add('hidden');
     }, 500);
+
+    // ===== 模块初始化 =====
+    initClock();        // 可爱时钟
+    initDecoration();   // 节日装饰
+    initFloating();     // 浮动装饰
+    // initMood();        // 小乖心情 (暂时隐藏)
+    initWeather();     // 天气联动
+    // initGame();        // 接猫粮小游戏 (已移除)
 
     // ===== Scroll Animations =====
     initScrollAnimations();
@@ -26,9 +42,40 @@ document.addEventListener('DOMContentLoaded', function () {
     // ===== BGM Toggle =====
     initBGM();
 
+    // ===== Mood Notification =====
+    setMoodNotificationHTML();
+
     // ===== Feed Xiaoguai =====
     initFeedFeature();
+
+    // ===== Timeline Scroll Animation =====
+    initTimelineAnimation();
 });
+
+/**
+ * 里程碑时间线滚动动画
+ */
+function initTimelineAnimation() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    if (timelineItems.length === 0) return;
+
+    const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add stagger delay based on index
+                setTimeout(() => {
+                    entry.target.classList.add('visible');
+                }, index * 150);
+            }
+        });
+    }, {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    timelineItems.forEach(item => timelineObserver.observe(item));
+}
 
 /**
  * 滚动淡入动画
@@ -276,12 +323,14 @@ function initBGM() {
 
     if (!bgmToggle || !bgmAudio) return;
 
-    // 从 localStorage 恢复播放状态
-    const wasPlaying = localStorage.getItem('bgmPlaying') === 'true';
-    if (wasPlaying) {
-        bgmAudio.play().catch(() => {}); // 尝试播放（可能因浏览器策略失败）
+    // 每次打开页面都尝试播放
+    bgmAudio.play().then(() => {
+        localStorage.setItem('bgmPlaying', 'true');
         bgmToggle.classList.add('playing');
-    }
+    }).catch(() => {
+        // 播放失败（可能是浏览器策略），不处理
+        localStorage.setItem('bgmPlaying', 'false');
+    });
 
     // 播放/暂停切换
     bgmToggle.addEventListener('click', function () {

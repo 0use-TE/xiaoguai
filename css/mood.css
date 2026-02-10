@@ -1,0 +1,229 @@
+/* ===== Mood Widget ===== */
+/* 暂时隐藏心情模块 */
+.mood-widget {
+    display: none !important;
+}
+
+.mood-widget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 100;
+}
+
+.mood-bubble {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff 0%, #fdf2f5 100%);
+    box-shadow:
+        0 8px 25px rgba(248, 200, 220, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 4px solid transparent;
+}
+
+.mood-bubble:hover {
+    transform: scale(1.1);
+}
+
+.mood-avatar {
+    font-size: 3rem;
+    transition: transform 0.3s ease;
+}
+
+.mood-bubble.happy .mood-avatar {
+    animation: happyBounce 1s ease-in-out infinite;
+}
+
+.mood-bubble.content .mood-avatar {
+    animation: contentWiggle 2s ease-in-out infinite;
+}
+
+.mood-bubble.normal .mood-avatar {
+    animation: normalFloat 3s ease-in-out infinite;
+}
+
+.mood-bubble.hungry .mood-avatar {
+    animation: hungryShake 0.5s ease-in-out infinite;
+}
+
+.mood-bubble.sleepy .mood-avatar {
+    animation: sleepyFloat 4s ease-in-out infinite;
+}
+
+@keyframes happyBounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+@keyframes contentWiggle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(3deg); }
+}
+
+@keyframes normalFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@keyframes hungryShake {
+    0%, 100% { transform: translateX(-3px); }
+    50% { transform: translateX(3px); }
+}
+
+@keyframes sleepyFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-2px) scale(0.98); }
+}
+
+/* Mood speech bubble */
+.mood-speech {
+    position: absolute;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    padding: 10px 15px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    font-size: 0.9rem;
+    color: #9B7B8A;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mood-speech::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 10px solid transparent;
+    border-top-color: #fff;
+}
+
+.mood-bubble:hover .mood-speech {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-5px);
+}
+
+/* Hunger bar */
+.hunger-bar-container {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.hunger-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FF6B6B, #FF8E8E);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.hunger-bar.full {
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+}
+
+.hunger-bar.medium {
+    background: linear-gradient(90deg, #FFC107, #FFD54F);
+}
+
+/* Mood indicator colors */
+.mood-bubble.happy {
+    border-color: #FF69B4;
+}
+
+.mood-bubble.content {
+    border-color: #FFB6C1;
+}
+
+.mood-bubble.normal {
+    border-color: #DDA0DD;
+}
+
+.mood-bubble.hungry {
+    border-color: #FFA07A;
+}
+
+.mood-bubble.sleepy {
+    border-color: #B0C4DE;
+}
+
+/* ===== Mood notification ===== */
+.mood-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #fff 0%, #fdf2f5 100%);
+    padding: 30px 50px;
+    border-radius: 30px;
+    box-shadow: 0 20px 60px rgba(248, 200, 220, 0.5);
+    text-align: center;
+    z-index: 1001;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mood-notification.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.mood-notification .mood-icon {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.mood-notification .mood-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: #D495A5;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+    {
+        bottom: .mood-widget 20px;
+        right: 20px;
+    }
+
+    .mood-bubble {
+        width: 70px;
+        height: 70px;
+        border-width: 3px;
+    }
+
+    .mood-avatar {
+        font-size: 2rem;
+    }
+
+    .mood-speech {
+        font-size: 0.75rem;
+        padding: 8px 12px;
+        bottom: 85px;
+    }
+
+    .hunger-bar-container {
+        width: 60px;
+        height: 6px;
+        bottom: -20px;
+    }
+}

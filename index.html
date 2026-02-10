@@ -5,8 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>小乖 - 可爱的非洲迷你刺猬</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/clock.css">
+    <link rel="stylesheet" href="css/decoration.css">
+    <link rel="stylesheet" href="css/floating.css">
+    <link rel="stylesheet" href="css/mood.css">
+    <link rel="stylesheet" href="css/weather.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/milestones.css">
 </head>
 <body>
+    <!-- Holiday Decoration Container -->
+    <div class="holiday-decoration" id="holidayDecoration"></div>
+
+    <!-- Floating Decoration Container -->
+    <div class="floating-decoration" id="floatingContainer"></div>
+
+    <!-- Clock Widget -->
+    <div class="clock-widget" id="clockContainer"></div>
     <!-- Background decorations -->
     <div class="bg-decoration">
         <span class="star">✨</span>
@@ -164,6 +179,82 @@
                 </div>
             </div>
         </section>
+
+        <!-- Milestone Timeline Section -->
+        <section class="milestone-section fade-in">
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <span class="pearl"></span>
+            <h2 class="title-sparkle decorate-underline">小乖的成长故事</h2>
+            <p class="cute-paragraph text-glow">这是小乖来到我身边的点点滴滴~</p>
+
+            <div class="timeline">
+                <div class="timeline-item" data-month="0">
+                    <div class="timeline-marker">🏠</div>
+                    <div class="timeline-content">
+                        <h3 class="bling-text">初见小乖 · 第1天</h3>
+                        <p class="timeline-date">2024年10月</p>
+                        <p class="timeline-desc">第一次见到小乖，她好脏好小一只，蜷缩在盒子里，用警惕的小眼睛看着我...</p>
+                        <span class="timeline-emoji">😰🐾</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-month="1">
+                    <div class="timeline-marker">🐾</div>
+                    <div class="timeline-content">
+                        <h3 class="bling-text">开始信任 · 第1周</h3>
+                        <p class="timeline-date">2024年10月</p>
+                        <p class="timeline-desc">小乖不再那么怕我了，虽然还是躲躲藏藏，但开始好奇地探头探脑~</p>
+                        <span class="timeline-emoji">👀✨</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-month="2">
+                    <div class="timeline-marker">💕</div>
+                    <div class="timeline-content">
+                        <h3 class="bling-text">第一次抱抱 · 第1个月</h3>
+                        <p class="timeline-date">2024年11月</p>
+                        <p class="timeline-desc">小乖终于愿意让我抱抱了！软软的小身子在我手里发抖，但是没有扎我，好幸福~</p>
+                        <span class="timeline-emoji">🥰💗</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-month="3">
+                    <div class="timeline-marker">🍖</div>
+                    <div class="timeline-content">
+                        <h3 class="bling-text">小吃货诞生 · 第2个月</h3>
+                        <p class="timeline-date">2024年12月</p>
+                        <p class="timeline-desc">发现小乖超级爱吃猫粮！每次听到猫粮袋子的声音就激动得不行，小嘴巴吧嗒吧嗒的~</p>
+                        <span class="timeline-emoji">😋🥣</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-month="4">
+                    <div class="timeline-marker">💤</div>
+                    <div class="timeline-content">
+                        <h3 class="bling-text">陪我睡觉 · 第3个月</h3>
+                        <p class="timeline-date">2025年1月</p>
+                        <p class="timeline-desc">小乖开始在我旁边睡觉觉了，小肚子一起一伏的，偶尔还会做梦蹬小腿，太可爱了！</p>
+                        <span class="timeline-emoji">😴💤</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-month="5">
+                    <div class="timeline-marker">👑</div>
+                    <div class="timeline-content">
+                        <h3 class="bling-text">现在 · 第4个月</h3>
+                        <p class="timeline-date">2025年2月</p>
+                        <p class="timeline-desc">小乖已经完全信任我啦！会在我手上吃东西，喜欢我摸她的小脑袋，看到我会开心地探索~ 我超爱她的！</p>
+                        <span class="timeline-emoji">🦔💖👑</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="milestone-quote">
+                <p>💝 <strong>小乖是我最珍贵的宝贝，我会一直一直爱你~</strong> 💝</p>
+            </div>
+        </section>
     </main>
 
     <!-- Feed Counter -->
@@ -188,6 +279,6 @@
         <span class="lightbox-counter"></span>
     </div>
 
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

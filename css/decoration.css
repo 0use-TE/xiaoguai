@@ -1,0 +1,213 @@
+/* ===== Holiday Decorations ===== */
+
+/* Base decoration container */
+.holiday-decoration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+/* ===== Spring Festival (春节) ===== */
+.spring-festival .decoration-item {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: springFloat 4s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.spring-festival .lantern {
+    color: #FF4444;
+    text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.spring-festival .fu {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.spring-festival .flower {
+    color: #FF6B6B;
+}
+
+@keyframes springFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* ===== Valentine's Day (情人节) ===== */
+.valentine .decoration-item {
+    position: absolute;
+    font-size: 2rem;
+    animation: loveFloat 3s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.valentine .heart {
+    color: #FF1744;
+    text-shadow: 0 0 15px rgba(255, 23, 68, 0.6);
+}
+
+.valentine .rose {
+    color: #D32F2F;
+}
+
+.valentine .chocolate {
+    color: #795548;
+}
+
+@keyframes loveFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.1); }
+}
+
+/* ===== Christmas (圣诞节) ===== */
+.christmas .decoration-item {
+    position: absolute;
+    font-size: 2rem;
+    animation: christmasFloat 3s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.christmas .tree {
+    color: #2E7D32;
+}
+
+.christmas .snowflake {
+    color: #fff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.christmas .gift {
+    color: #C62828;
+}
+
+.christmas .bell {
+    color: #FFD54F;
+}
+
+@keyframes christmasFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(5deg); }
+    75% { transform: translateY(-10px) rotate(-5deg); }
+}
+
+/* ===== Halloween (万圣节) ===== */
+.halloween .decoration-item {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: spookyFloat 2.5s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.halloween .pumpkin {
+    color: #FF6D00;
+    text-shadow: 0 0 10px rgba(255, 109, 0, 0.5);
+}
+
+.halloween .ghost {
+    color: #ECEFF1;
+}
+
+.halloween .bat {
+    color: #37474F;
+}
+
+.halloween .candy {
+    color: #FFAB40;
+}
+
+@keyframes spookyFloat {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* ===== Default / Everyday (日常) ===== */
+.everyday .decoration-item {
+    position: absolute;
+    font-size: 1.8rem;
+    animation: everydayFloat 4s ease-in-out infinite;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.everyday .star {
+    color: #FFD700;
+    opacity: 0.8;
+}
+
+.everyday .sparkle {
+    color: #FF69B4;
+    opacity: 0.6;
+}
+
+.everyday .flower {
+    color: #F8C8DC;
+}
+
+@keyframes everydayFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(8deg); }
+}
+
+/* ===== Seasonal Banner ===== */
+.holiday-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 8px;
+    text-align: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    z-index: 998;
+    animation: bannerPulse 2s ease-in-out infinite;
+}
+
+.spring-festival .holiday-banner {
+    background: linear-gradient(90deg, #FF4444, #FF6B6B, #FF4444);
+    color: #FFD700;
+}
+
+.valentine .holiday-banner {
+    background: linear-gradient(90deg, #FF1744, #FF5252, #FF1744);
+    color: #fff;
+}
+
+.christmas .holiday-banner {
+    background: linear-gradient(90deg, #C62828, #2E7D32, #C62828);
+    color: #fff;
+}
+
+.halloween .holiday-banner {
+    background: linear-gradient(90deg, #FF6D00, #FFAB40, #FF6D00);
+    color: #000;
+}
+
+@keyframes bannerPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+    .spring-festival .decoration-item,
+    .valentine .decoration-item,
+    .christmas .decoration-item,
+    .halloween .decoration-item,
+    .everyday .decoration-item {
+        font-size: 1.5rem;
+    }
+
+    .holiday-banner {
+        font-size: 0.9rem;
+    }
+}

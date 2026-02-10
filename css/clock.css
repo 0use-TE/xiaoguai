@@ -1,0 +1,115 @@
+/* ===== Cute Clock Widget ===== */
+.clock-widget {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+}
+
+.clock-face {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fff 0%, #fdf2f5 50%, #fff 100%);
+    border: 4px solid #F8C8DC;
+    box-shadow:
+        0 4px 15px rgba(248, 200, 220, 0.5),
+        inset 0 0 20px rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.clock-face:hover {
+    transform: scale(1.1);
+}
+
+.clock-face::before {
+    content: '🎀';
+    position: absolute;
+    top: -12px;
+    font-size: 1.5rem;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+.clock-time {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: #D495A5;
+    line-height: 1;
+}
+
+.clock-period {
+    font-size: 0.6rem;
+    color: #F8C8DC;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* ===== Clock Decorations ===== */
+.clock-decoration {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.clock-star {
+    position: absolute;
+    font-size: 0.5rem;
+    animation: clockTwinkle 2s ease-in-out infinite;
+}
+
+.clock-star:nth-child(1) { top: 5px; right: 10px; animation-delay: 0s; }
+.clock-star:nth-child(2) { top: 10px; left: 8px; animation-delay: 0.5s; }
+.clock-star:nth-child(3) { bottom: 8px; right: 12px; animation-delay: 1s; }
+
+@keyframes clockTwinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ===== Time Bounce Animation ===== */
+.clock-time.bounce {
+    animation: timeBounce 0.3s ease;
+}
+
+@keyframes timeBounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+    .clock-widget {
+        top: 15px;
+        left: 15px;
+    }
+
+    .clock-face {
+        width: 60px;
+        height: 60px;
+        border-width: 3px;
+    }
+
+    .clock-face::before {
+        font-size: 1rem;
+        top: -8px;
+    }
+
+    .clock-time {
+        font-size: 1.1rem;
+    }
+
+    .clock-period {
+        font-size: 0.5rem;
+    }
+
+    .clock-star {
+        font-size: 0.4rem;
+    }
+}
