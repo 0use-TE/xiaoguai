@@ -355,12 +355,26 @@ header h1 {
     font-family: 'Fredoka One', cursive;
     font-size: 5rem;
     margin-bottom: 15px;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.15), 0 0 30px rgba(255, 255, 255, 0.5);
-    animation: bounceIn 1.2s ease;
+    text-shadow: 3px 3px 0 #FFB6C1, 6px 6px 0 rgba(255, 182, 193, 0.3);
+    animation: titleBounce 0.8s ease-in-out infinite;
     position: relative;
     display: inline-block;
-    color: #FFF;
     letter-spacing: 3px;
+    color: #FFF;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
+}
+
+@keyframes title-bounce {
+    0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+    25% { transform: translateY(-8px) scale(1.05) rotate(-3deg); }
+    50% { transform: translateY(0) scale(1) rotate(0deg); }
+    75% { transform: translateY(-8px) scale(1.05) rotate(3deg); }
+}
+    position: relative;
+    display: inline-block;
+    letter-spacing: 3px;
+    color: #FFF;
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.9);
 }
 
 header h1::before,
@@ -1172,66 +1186,276 @@ footer .heart {
     }
 }
 
+/* ===== Cute Text Effects ===== */
+.cute-text {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.cute-text:hover {
+    animation: wiggle 0.5s ease-in-out infinite;
+    transform: scale(1.05);
+}
+
+/* Rainbow gradient text */
+.rainbow-text {
+    background: linear-gradient(
+        135deg,
+        #FF69B4 0%,
+        #FFB6C1 25%,
+        #FFC0CB 50%,
+        #FFB6C1 75%,
+        #FF69B4 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% auto;
+    animation: rainbowMove 3s linear infinite;
+    filter: drop-shadow(2px 2px 4px rgba(255, 105, 180, 0.3));
+}
+
+@keyframes rainbowMove {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* Text glow effect on hover */
+.text-glow {
+    transition: all 0.3s ease;
+}
+
+.text-glow:hover {
+    text-shadow:
+        0 0 10px rgba(255, 182, 193, 0.8),
+        0 0 20px rgba(255, 182, 193, 0.6),
+        0 0 30px rgba(255, 182, 193, 0.4),
+        0 0 40px rgba(255, 182, 193, 0.2);
+}
+
+/* Bounce text on hover */
+.bounce-text {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.bounce-text:hover {
+    animation: bounceText 0.6s ease infinite;
+}
+
+@keyframes bounceText {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Cute paragraph with cute quote marks */
+.cute-paragraph {
+    position: relative;
+    padding-left: 35px;
+    font-weight: 600;
+}
+
+.cute-paragraph::before {
+    content: '✿';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #F8C8DC;
+    font-size: 1.5rem;
+    animation: wiggle 2s ease-in-out infinite;
+}
+
+.cute-paragraph::after {
+    content: ' ✿';
+    color: #FFB6C1;
+    font-size: 1rem;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+/* Emoji decoration for paragraphs */
+.emoji-decoration {
+    display: inline-block;
+    animation: floatEmoji 2s ease-in-out infinite;
+    font-size: 1.2rem;
+    margin: 0 5px;
+}
+
+.emoji-decoration:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.emoji-decoration:nth-child(4) {
+    animation-delay: 0.5s;
+}
+
+/* Cute highlight for text */
+.cute-highlight {
+    background: linear-gradient(
+        120deg,
+        rgba(255, 182, 193, 0.4) 0%,
+        rgba(255, 182, 193, 0.4) 100%
+    );
+    padding: 2px 8px;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.cute-highlight:hover {
+    background: linear-gradient(
+        120deg,
+        rgba(255, 105, 180, 0.3) 0%,
+        rgba(255, 105, 180, 0.3) 100%
+    );
+    transform: scale(1.05);
+}
+
+/* Number bounce effect */
+.number-bounce {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.number-bounce:hover {
+    animation: numberBounce 0.6s ease infinite;
+}
+
+@keyframes numberBounce {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.2) rotate(-5deg); }
+    50% { transform: scale(1) rotate(0deg); }
+    75% { transform: scale(1.2) rotate(5deg); }
+}
+
+/* Sparkle cursor effect on text */
+.sparkle-cursor {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='18' font-size='18'%3E✨%3C/text%3E%3C/svg%3E"), auto;
+}
+
+/* Floating emoji decoration for text */
+.text-emoji {
+    display: inline-block;
+    animation: floatEmoji 3s ease-in-out infinite;
+}
+
+@keyframes floatEmoji {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-5px) rotate(10deg); }
+}
+
+/* Underline decoration */
+.decorate-underline {
+    position: relative;
+}
+
+.decorate-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #F8C8DC, #FFB6C1, #F8C8DC);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.decorate-underline:hover::after {
+    width: 100%;
+}
+
+/* Shaking emphasis effect */
+.shake-emphasis {
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.shake-emphasis:hover {
+    animation: shakeEmphasis 0.5s ease infinite;
+}
+
+@keyframes shakeEmphasis {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+}
+
+/* Highlight effect */
+.highlight-cute {
+    background: linear-gradient(
+        120deg,
+        rgba(248, 200, 220, 0.3) 0%,
+        rgba(248, 200, 220, 0.3) 100%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    background-position: 0 90%;
+    transition: all 0.3s ease;
+}
+
+.highlight-cute:hover {
+    background-size: 100% 88%;
+}
+
+/* Title sparkle effect */
+.title-sparkle {
+    position: relative;
+}
+
+.title-sparkle::before {
+    content: '✨';
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    animation: none;
+}
+
+.title-sparkle:hover::before {
+    opacity: 1;
+    animation: sparkle 0.6s ease infinite;
+}
+
+/* Bling bling effect */
+.bling-text {
+    position: relative;
+}
+
+.bling-text::before {
+    content: '·°.';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #FFD700;
+    animation: bling 1s ease-in-out infinite;
+}
+
+.bling-text::after {
+    content: '.°·';
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #FFD700;
+    animation: bling 1s ease-in-out infinite 0.5s;
+}
+
+@keyframes bling {
+    0%, 100% { opacity: 0.5; transform: translateY(-50%) scale(0.8); }
+    50% { opacity: 1; transform: translateY(-50%) scale(1.2); }
+}
+
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 2.8rem;
+    .title-sparkle::before {
+        left: -20px;
+        font-size: 0.8rem;
     }
 
-    header h1::before,
-    header h1::after {
-        font-size: 1.2rem;
-        display: none;
-    }
-
-    .stats {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .stat-item {
-        width: 100%;
-        max-width: 220px;
-    }
-
-    .stat-number {
-        font-size: 2.8rem;
-    }
-
-    /* BGM Toggle mobile */
-    .bgm-toggle {
-        width: 45px;
-        height: 45px;
-        top: 15px;
-        right: 15px;
-    }
-
-    .bgm-toggle .bgm-icon {
-        font-size: 1.2rem;
-    }
-
-    /* Today's Xiaoguai mobile */
-    .today-frame {
-        padding: 25px 20px;
-        border-radius: 25px;
-    }
-
-    .today-content h3 {
-        font-size: 1.6rem;
-    }
-
-    .frame-decoration {
-        font-size: 1.5rem;
-    }
-
-    /* Feed Counter mobile */
-    .feed-counter {
-        bottom: 20px;
-        left: 20px;
-        padding: 12px 20px;
-        font-size: 1.2rem;
-    }
-
-    .feed-icon {
-        font-size: 1.5rem;
+    .bling-text::before,
+    .bling-text::after {
+        font-size: 0.8rem;
     }
 }
